@@ -1,7 +1,9 @@
 import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import { AppRouter } from './router/AppRouter';
 
 const JournalApp = (props) => {
-    return (<div></div>);
+    return (<AppRouter/>);
 }
 
 export default JournalApp;
