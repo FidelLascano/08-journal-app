@@ -1,21 +1,49 @@
 import React from 'react';
-import {Box, Drawer, Toolbar, Typography} from "@mui/material";
+import {
+    Box,
+    Divider,
+    Drawer,
+    Grid,
+    List,
+    ListItem,
+    ListItemButton,
+    ListItemText,
+    Toolbar,
+    Typography
+} from "@mui/material";
+import {TurnedInNot} from "@mui/icons-material";
 
 const SideBar = ({drawerWidth = 240}) => {
     return (
-        <Box component={'nav'} sx = {{sm: drawerWidth, flexShrink: {sm: 0}}}
+        <Box component={'nav'} sx={{sm: drawerWidth, flexShrink: {sm: 0}}}
         >
             <Drawer
                 variant='permanent'
                 open
                 sx={{
-                    display:{xs: "block"},
+                    display: {xs: "block"},
                     '& .MuiDrawer-paper': {boxSizing: 'border-box', width: drawerWidth}
                 }}
             >
                 <Toolbar>
                     <Typography variant={'h6'} noWrap component="div">Fidel Lascano</Typography>
                 </Toolbar>
+                <Divider/>
+                <List>
+                    {["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"].map(
+                        text => (
+                            <ListItem key={text} disablePadding>
+                                <ListItemButton>
+                                    <TurnedInNot/>
+                                </ListItemButton>
+                                <Grid container>
+                                    <ListItemText primary={text}/>
+                                    <ListItemText secondary={"Here, you can wirte a content text"}/>
+                                </Grid>
+                            </ListItem>
+                        ))
+                    }
+                </List>
             </Drawer>
         </Box>
     );
