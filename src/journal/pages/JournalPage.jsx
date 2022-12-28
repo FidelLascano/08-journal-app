@@ -1,12 +1,12 @@
 import React from 'react'
-import {Typography} from "@mui/material";
-import {MailOutline} from "@mui/icons-material";
 import {JournalLayout} from "../layout/JournalLayout";
+import NoteView from "../views/NoteView.jsx";
 
+/*<NothingSelectedView/>*/
 export const JournalPage = () => {
     return (
         <JournalLayout>
-            <Typography variant={'h4'}>JournalPage</Typography>
+            <NoteView/>
         </JournalLayout>
     )
 }
