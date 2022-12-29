@@ -13,16 +13,17 @@ const NoteView = () => {
 
         >
             <Grid item>
-                <Typography fontSize={39} fontWeight={'light'}>28 August, 2022</Typography>
+                <Typography fontSize={25} fontWeight={'light'}>28 August, 2022</Typography>
             </Grid>
             <Grid item>
                 <Button color={"primary"} sx={{padding:2}}>
-                    <SaveOutlined sx={{fontSize: 30, mr: 1}}/>
+                    <SaveOutlined sx={{fontSize: 25, mr: 1}}/>
                     Save
                 </Button>
             </Grid>
             <Grid container>
                 <TextField
+                    size={"small"}
                 type={"text"}
                 variant={"filled"}
                 fullWidth

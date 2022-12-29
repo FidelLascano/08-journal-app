@@ -34,8 +34,8 @@ const SideBar = ({drawerWidth = 240}) => {
                                 <ListItemButton>
                                     <TurnedInNot/>
                                 <Grid container>
-                                    <ListItemText primary={text}/>
-                                    <ListItemText secondary={"Here, you can wirte a content text"}/>
+                                    <ListItemText primary={text} sx={{fontSize:10}}/>
+                                    <ListItemText secondary={"Here, you can wirte a content text"} sx={{fontSize:10}}/>
                                 </Grid>
                                 </ListItemButton>
                             </ListItem>
