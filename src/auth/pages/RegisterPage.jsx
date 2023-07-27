@@ -1,38 +1,62 @@
-import React from 'react'
+import React, {useMemo, useState} from 'react'
 import AuthLayout from "../layout/AuthLayout.jsx";
 import {Button, Grid, Link, TextField, Typography} from "@mui/material";
 import {Google} from "@mui/icons-material";
 import {Link as RouterLink} from "react-router-dom";
 import {useForm} from "../../hooks/index.js";
 import {useDispatch} from "react-redux";
+import {formValidations} from "../../utils/index.js";
+import {startSignInWithEmailAndPassword} from "../../store/auth/thunks.js";
 
 export const RegisterPage = () => {
+  const [formSubmitted, setFormSubmitted] = useState(false)
   const dispatch = useDispatch();
-  const {email, password, fullName, onInputChange, formState, onResetForm} = useForm({
+
+
+  const {
+    email, password, fullName, onInputChange, formState,
+    emailValid, passwordValid, fullNameValid, onResetForm
+  } = useForm({
     email: 'fidekof@gmail.com',
     password: '123456',
-    fullName: 'Fidel Lascano'
-  });
+    fullName: 'Fidel Lascano',
+    emailValid: {isValid: true, message: ''},
+    passwordValid: {isValid: true, message: ''},
+    fullNameValid: {isValid: true, message: ''},
+  }, formValidations);
+
+
+  const formValid = useMemo(() => (emailValid.isValid && passwordValid.isValid && fullNameValid.isValid)  , [emailValid, passwordValid, fullNameValid]);
 
   const handlerCreateSubmit = (event) =>
   {
     event.preventDefault();
+    if(!formValid)
+    {
+      setFormSubmitted(false);
+      return;
+    }
+
+    setFormSubmitted(true);
+    dispatch(startSignInWithEmailAndPassword(email, password, fullName));
     console.log(formState);
-    //dispatch()
   }
 
   return (
       <AuthLayout title={"Register"}>
         <form onSubmit={handlerCreateSubmit}>
+          {(!formSubmitted) &&  <h2 style={{color: `${formValid?'green':'red'}`}}>{formValid?'Valid Form':'Invalid Form'}</h2>}
           <Grid container spacing={1}>
             <Grid item xs={12}  spacing={1}>
               <TextField
                   name={'fullName'}
                   label={'Full Name'}
                   type={'text'}
-                  placeholder={fullName}
                   onChange={onInputChange}
                   fullWidth
+                  value={fullName}
+                  error={!fullNameValid.isValid && !formSubmitted}
+                  helperText={(!fullNameValid.isValid && !formSubmitted)?fullNameValid.message:''}
               ></TextField>
             </Grid>
             <Grid item xs={12} spacing={1}>
@@ -40,9 +64,11 @@ export const RegisterPage = () => {
                   name={'email'}
                   label={'Email'}
                   type={'email'}
-                  placeholder={email}
                   onChange={onInputChange}
                   fullWidth
+                  value={email}
+                  error={!emailValid.isValid && !formSubmitted}
+                  helperText={(!emailValid.isValid && !formSubmitted)? emailValid.message : ''}
               ></TextField>
             </Grid>
             <Grid item xs={12} >
@@ -50,9 +76,11 @@ export const RegisterPage = () => {
                   name={'password'}
                   label={'Password'}
                   type={'password'}
-                  placeholder={password}
+                  value={password}
                   fullWidth
                   onChange={onInputChange}
+                  error={!passwordValid.isValid && !formSubmitted}
+                  helperText={(!passwordValid.isValid && !formSubmitted) ? passwordValid.message : ''}
               />
             </Grid>
             <Grid
@@ -65,6 +93,7 @@ export const RegisterPage = () => {
                     variant={'contained'}
                     fullWidth
                     type={'submit'}
+                    disabled={!formValid && !formSubmitted}
                 >Create Account</Button>
               </Grid>
             </Grid>

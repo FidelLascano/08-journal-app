@@ -9,6 +9,7 @@ export const authSlice = createSlice({
        displayName: null,
        photoURL: null,
        errorMessage: null,
+        accessToken: null
     },
     reducers: {
        login: (state, action) => {
@@ -17,6 +18,7 @@ export const authSlice = createSlice({
            state.email = action.payload.email;
            state.displayName = action.payload.displayName;
            state.photoURL = action.payload.photoURL;
+           state.accessToken = action.payload.accessToken;
            state.errorMessage = null;
        },
         logout: (state, action) => {
@@ -25,6 +27,7 @@ export const authSlice = createSlice({
            state.email = null;
            state.displayName = null;
            state.photoURL = null;
+           state.accessToken = null;
            state.errorMessage = action.payload.errorMessage;
     },
         checkinCredentials: (state, action) =>
@@ -35,6 +38,7 @@ export const authSlice = createSlice({
             state.email = null;
             state.displayName = null;
             state.photoURL = null;
+            state.accessToken = null;
             state.errorMessage = null;
         }
     }
