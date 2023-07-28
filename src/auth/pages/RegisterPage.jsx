@@ -1,16 +1,18 @@
 import React, {useMemo, useState} from 'react'
 import AuthLayout from "../layout/AuthLayout.jsx";
-import {Button, Grid, Link, TextField, Typography} from "@mui/material";
+import {Alert, Button, Grid, Link, TextField, Typography} from "@mui/material";
 import {Google} from "@mui/icons-material";
 import {Link as RouterLink} from "react-router-dom";
 import {useForm} from "../../hooks/index.js";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {formValidations} from "../../utils/index.js";
 import {startSignInWithEmailAndPassword} from "../../store/auth/thunks.js";
 
 export const RegisterPage = () => {
   const [formSubmitted, setFormSubmitted] = useState(false)
   const dispatch = useDispatch();
+  const {status, errorMessage} = useSelector(state => state.auth);
+  const isUserAuth = useMemo(() => status === 'checking', [status]);
 
 
   const {
@@ -88,12 +90,15 @@ export const RegisterPage = () => {
                 spacing={1}
                 sx={{mb: 1, mt: 1 , pl:1}}
             >
+              <Grid item xs={12} sm={12} md={12} display={(!!errorMessage)?'':'none'}>
+                <Alert severity={(!!errorMessage?'error':'success')}>{(!!errorMessage)?errorMessage:'User Logged'}</Alert>
+              </Grid>
               <Grid item xs={12} sm={12} md={12}>
                 <Button
                     variant={'contained'}
                     fullWidth
                     type={'submit'}
-                    disabled={!formValid && !formSubmitted}
+                    disabled={isUserAuth}
                 >Create Account</Button>
               </Grid>
             </Grid>
