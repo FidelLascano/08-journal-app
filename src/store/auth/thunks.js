@@ -1,5 +1,5 @@
 import {checkinCredentials, login, logout} from "./authSlice.js";
-import {signInWithGoogle, signInWithEmailAndPassword} from "../../../firebase/providers.js";
+import {loginWithEmailAndPassword, signInWithGoogle, startSignUpWithEmailAndPassword} from "../../../firebase/providers.js";
 
 export const checkAuth = (email, password) => {
     return async (dispatch) => {
@@ -30,13 +30,12 @@ export const startGoogleSingIn = () => {
 }
 
 
-export const startSignInWithEmailAndPassword = (email, password, displayName) =>
+export const startCreateWithEmailAndPassword = (email, password, displayName) =>
 {
     return async (dispatch) =>
     {
-        console.log("StartEmailSingIn")
         dispatch(checkinCredentials());
-        const startSingInWithEmailAndPasswordResult =  await signInWithEmailAndPassword(email, password, displayName);
+        const startSingInWithEmailAndPasswordResult =  await startSignUpWithEmailAndPassword(email, password, displayName);
         if (!startSingInWithEmailAndPasswordResult.ok) return dispatch(logout({errorMessage: startSingInWithEmailAndPasswordResult.errorMessage}));
         else {
             const payload =
@@ -46,6 +45,28 @@ export const startSignInWithEmailAndPassword = (email, password, displayName) =>
                     , displayName: startSingInWithEmailAndPasswordResult.displayName
                     , photoURL: startSingInWithEmailAndPasswordResult.photoURL
                     , accessToken: startSingInWithEmailAndPasswordResult.accessToken
+                }
+
+            return dispatch(login(payload));
+        }
+    }
+
+}
+
+export const startLoginWithEmailAndPassword =  (email, password) => {
+    return async (dispatch) =>
+    {
+        dispatch(checkinCredentials());
+        const authResult = await  loginWithEmailAndPassword(email, password);
+        if (!authResult.ok) return dispatch(logout({errorMessage: authResult.errorMessage}));
+        else {
+            const payload =
+                {
+                    uuid: authResult.uid
+                    , email
+                    , displayName: authResult.displayName
+                    , photoURL: authResult.photoURL
+                    , accessToken: authResult.accessToken
                 }
 
             return dispatch(login(payload));
