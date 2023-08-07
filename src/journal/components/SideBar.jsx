@@ -12,8 +12,11 @@ import {
     Typography
 } from "@mui/material";
 import {TurnedInNot} from "@mui/icons-material";
+import {useSelector} from "react-redux";
 
 const SideBar = ({drawerWidth = 240}) => {
+    const {displayName} = useSelector(state => state.auth);
+
     return (
         <Box component={'nav'} sx={{sm: drawerWidth, flexShrink: {sm: 0}}}>
             <Drawer
@@ -24,7 +27,7 @@ const SideBar = ({drawerWidth = 240}) => {
                     '& .MuiDrawer-paper': {boxSizing: 'border-box', width: drawerWidth}
                 }}>
                 <Toolbar>
-                    <Typography variant={'h6'} noWrap component="div">Fidel Lascano</Typography>
+                    <Typography variant={'h6'} noWrap component="div">{displayName}</Typography>
                 </Toolbar>
                 <Divider/>
                 <List>

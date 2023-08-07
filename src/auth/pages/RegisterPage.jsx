@@ -68,11 +68,11 @@ export const RegisterPage = () => {
 
     return (
         <AuthLayout title={"Register"}>
-            <form onSubmit={handlerCreateSubmit}>
+            <form onSubmit={handlerCreateSubmit}  className={'animate__animated animate__fadeIn animate__faster'}>
                 {(!formSubmitted && formStarted) &&
                     <h2 style={{color: `${formValid ? 'green' : 'red'}`}}>{formValid ? 'Valid Form' : 'Invalid Form'}</h2>}
                 <Grid container spacing={1}>
-                    <Grid item xs={12} spacing={1}>
+                    <Grid item xs={12} spacing={1} container>
                         <TextField
                             placeholder={initialState.fullName}
                             name={'fullName'}
@@ -85,7 +85,7 @@ export const RegisterPage = () => {
                             helperText={(!fullNameValid.isValid && !formSubmitted) ? fullNameValid.message : ''}
                         ></TextField>
                     </Grid>
-                    <Grid item xs={12} spacing={1}>
+                    <Grid item xs={12} spacing={1} container>
                         <TextField
                             placeholder={initialState.email}
                             name={'email'}
