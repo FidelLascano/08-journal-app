@@ -1,4 +1,10 @@
-import {createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, updateProfile, signInWithEmailAndPassword} from 'firebase/auth';
+import {
+    createUserWithEmailAndPassword,
+    GoogleAuthProvider,
+    signInWithEmailAndPassword,
+    signInWithPopup,
+    updateProfile,
+} from 'firebase/auth';
 import {firebaseAuth} from "./config";
 
 const googleProvider = new GoogleAuthProvider();
@@ -8,7 +14,7 @@ export const signInWithGoogle = async () => {
         const singInDetails = await signInWithPopup(firebaseAuth, googleProvider);
         const credentials = GoogleAuthProvider.credentialFromResult(singInDetails);
         const {uid, displayName, email, photoURL, accessToken} = singInDetails.user;
-        const credentialResults = {
+        return {
             ok: true
             , uid
             , displayName
@@ -16,8 +22,6 @@ export const signInWithGoogle = async () => {
             , photoURL
             , accessToken
         };
-
-        return credentialResults;
     } catch (error) {
         console.log(error);
 
@@ -62,8 +66,7 @@ export const startSignUpWithEmailAndPassword = async (emailReg, password, displa
 
 
 export const loginWithEmailAndPassword = async (email_v, password_v) => {
-    try
-    {
+    try {
         console.log(email_v, password_v);
         const userCredential = await signInWithEmailAndPassword(firebaseAuth, email_v, password_v);
         console.log(userCredential)
@@ -83,9 +86,7 @@ export const loginWithEmailAndPassword = async (email_v, password_v) => {
             , photoURL
             , accessToken
         };
-    }
-    catch (error)
-    {
+    } catch (error) {
         console.log(error);
         return {
             ok: false
@@ -96,7 +97,7 @@ export const loginWithEmailAndPassword = async (email_v, password_v) => {
 
 
 export const startFirebaseLogout = async () => {
-try {
+    try {
         await firebaseAuth.signOut();
         return {ok: true};
     } catch (error) {
