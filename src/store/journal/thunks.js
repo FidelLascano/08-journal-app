@@ -1,11 +1,16 @@
-import {firebaseDb} from "../../../firebase/config.js";\
-import {setDoc} from "firebase/firestore"
-import {useDispatch, useSelector} from "react-redux";
-
-export const saveNote = (note) => {
+import {firebaseDb} from "../../../firebase/config.js";
+import {setDoc, doc, collection} from "firebase/firestore"
+import {addEmptyNote, savingNewNote, setActiveNote} from "./journalSlice.js";
+export const saveEmptyNoteT = (note) => {
     return async (dispatch, getState) => {
+        dispatch(savingNewNote());
         const userAuth = getState().auth;
-        const noteReference = await setDoc(firebaseDb.doc(`/${userAuth.uid}/journal/notes`), note);
-        dispatch(saveNote(true));
+        const noteReference = await doc(collection(firebaseDb,`/${userAuth.uuid}/journal/notes`));
+        console.log(noteReference.id);
+        await setDoc(noteReference, note);
+        const noteSaved ={...note, id: noteReference.id}
+        dispatch(addEmptyNote(noteSaved));
+        return dispatch(setActiveNote(noteSaved))
+
     }
 };
