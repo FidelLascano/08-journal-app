@@ -1,6 +1,5 @@
-import {CircularProgress, Grid, Typography} from "@mui/material";
+import {CircularProgress, Grid} from "@mui/material";
 import React from "react";
-import {useCheckAuth} from "../../hooks/useCheckAuth.js";
 
 export const CheckingAuth = () => {
 

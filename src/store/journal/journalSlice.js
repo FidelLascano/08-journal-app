@@ -7,14 +7,6 @@ export const journalSlice = createSlice({
         messageSave: "",
         notes: [],
         active: null
-        /*
-        active: {
-            id: null,
-            title: "",
-            body: "",
-            date: null,
-            imgUrls: []
-        }*/
     },
     reducers: {
         savingNewNote: (state, action) => {
@@ -31,6 +23,16 @@ export const journalSlice = createSlice({
             state.notes = action.payload;
         },
         updateNote: (state, action) => {
+            state.messageSave = "";
+            if (action.payload == null) return;
+
+            const {id} = action.payload;
+            const index = state.notes.findIndex(note => (note.id === id));
+            state.notes[index] = action.payload;
+            setNotes(state.notes);
+            state.isSaving = false;
+            state.active = action.payload;
+            state.messageSave = `Note ${action.payload.title} saved successfully`
         },
         deleteNote: (state, action) => {
 

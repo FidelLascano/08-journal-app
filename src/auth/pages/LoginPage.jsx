@@ -9,8 +9,10 @@ import {checkAuth, startGoogleSingIn, startLoginWithEmailAndPassword} from "../.
 import {formValidations} from "../../utils/index.js";
 
 const initialState = {
-    email: 'fidekof@gmail.com',
-    password: '123456'
+    email:'',
+    password:'',
+    emailValid: {isValid: false, message: ''},
+    passwordValid: {isValid: false, message: ''},
 }
 
 
@@ -21,12 +23,7 @@ export const LoginPage = () => {
     const dispatch = useDispatch();
 
     const {email, password, onInputChange, emailValid, passwordValid, formState, onResetForm} = useForm(
-        {
-            email:'',
-            password:'',
-            emailValid: {isValid: false, message: ''},
-            passwordValid: {isValid: false, message: ''},
-        }, formValidations);
+        initialState, formValidations);
 
 
     const {isAuth, isChecking, isUnAuth} = useMemo(() => ({
@@ -59,7 +56,6 @@ export const LoginPage = () => {
 
 
     const handlerGoogleSingIn = () => {
-        console.log('Google Sing In');
         dispatch(startGoogleSingIn());
     }
 

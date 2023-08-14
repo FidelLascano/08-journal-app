@@ -8,14 +8,12 @@ import {
 
 export const checkAuth = (email, password) => {
     return async (dispatch) => {
-        console.log("checkAuth")
         dispatch(checkinCredentials());
     }
 }
 
 export const startGoogleSingIn = () => {
     return async (dispatch) => {
-        console.log("StartGoogleSingIn")
         dispatch(checkinCredentials());
         const googleResult = await signInWithGoogle();
         if (!googleResult.ok) return dispatch(logout({errorMessage: googleResult.errorMessage}));

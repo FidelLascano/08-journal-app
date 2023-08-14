@@ -8,7 +8,6 @@ export const NavBar = ({drawerWidth = 240}) => {
     const dispatch = useDispatch();
     const handlerLogOutClick = (event) => {
         event.preventDefault();
-        console.log('LogOut')
         dispatch(startLogout());
     }
 

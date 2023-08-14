@@ -32,7 +32,6 @@ export const authSlice = createSlice({
     },
         checkinCredentials: (state, action) =>
         {
-            console.log("checking...")
             state.status = "checking";
             state.uuid = null;
             state.email = null;

@@ -23,8 +23,6 @@ export const signInWithGoogle = async () => {
             , accessToken
         };
     } catch (error) {
-        console.log(error);
-
         return {
             ok: false
             , errorMessage: error.message
@@ -56,7 +54,6 @@ export const startSignUpWithEmailAndPassword = async (emailReg, password, displa
 
 
     } catch (error) {
-        console.log(error);
         return {
             ok: false
             , errorMessage: error.message
@@ -67,9 +64,7 @@ export const startSignUpWithEmailAndPassword = async (emailReg, password, displa
 
 export const loginWithEmailAndPassword = async (email_v, password_v) => {
     try {
-        console.log(email_v, password_v);
         const userCredential = await signInWithEmailAndPassword(firebaseAuth, email_v, password_v);
-        console.log(userCredential)
         const {
             uid,
             displayName,
@@ -87,7 +82,6 @@ export const loginWithEmailAndPassword = async (email_v, password_v) => {
             , accessToken
         };
     } catch (error) {
-        console.log(error);
         return {
             ok: false
             , errorMessage: error.message
@@ -101,7 +95,6 @@ export const startFirebaseLogout = async () => {
         await firebaseAuth.signOut();
         return {ok: true};
     } catch (error) {
-        console.log(error);
         return {
             ok: false
             , errorMessage: error.message
