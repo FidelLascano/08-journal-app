@@ -1,14 +1,16 @@
-import React, {useEffect, useMemo} from 'react';
+import React, {useEffect, useMemo, useRef} from 'react';
 import Swal from 'sweetalert2';
 import {Button, Grid, TextField, Typography} from "@mui/material";
-import {SaveOutlined} from "@mui/icons-material";
+import {SaveOutlined, UploadOutlined} from "@mui/icons-material";
 import ImageGallery from "./ImageGallery.jsx";
 import {useDispatch, useSelector} from "react-redux";
 import {useForm} from "../../hooks/index.js";
-import {updateNoteT} from "../../store/journal/index.js";
+import {updateNoteFilesT, updateNoteT} from "../../store/journal/index.js";
+import {uploadImages} from "../../helper/cloudinary.js";
 
 const NoteView = () => {
-    const {active:note, isSaving, messageSave} = useSelector(state => state.journal);
+
+    const {active:note, isSaving, messageSave,savingNewNote} = useSelector(state => state.journal);
     const {id, title, body, date, imageUrls, onInputChange, onResetForm} = useForm(note);
     const formattedDate = useMemo(() => ((new Date(date)).toLocaleString("en-CA", {
         hour12: false,
@@ -25,11 +27,25 @@ const NoteView = () => {
     }, [messageSave]);
 
     const dispatch = useDispatch();
+    const fileInputRef = useRef();
 
     const handlerUpdate = (event) => {
         event.preventDefault();
         dispatch(updateNoteT({id, title, body, date: (new Date()).getTime() , imageUrls}));
     }
+
+    function handlerFileChange(event)
+    {
+
+        const files = event.target.files;
+        if(files.length === 0) return;
+        const FileList = Object.values(files);
+        dispatch(updateNoteFilesT(FileList));
+    }
+
+
+
+    function handlerFileClick() { fileInputRef.current.click();}
 
     return (
         <Grid container
@@ -43,6 +59,11 @@ const NoteView = () => {
                 <Typography fontSize={25} fontWeight={'light'}>{formattedDate}</Typography>
             </Grid>
             <Grid item>
+                <input type={"file"} multiple={true} onChange={handlerFileChange} hidden={true} ref={fileInputRef}/>
+                <Button color={"primary"} onClick={handlerFileClick} disabled={isSaving}>
+                    <UploadOutlined />
+                </Button>
+
                 <Button color={"primary"} sx={{padding:2}} onClick={handlerUpdate} disabled={isSaving}>
                     <SaveOutlined sx={{fontSize: 25, mr: 1}}/>
                     Save
@@ -76,7 +97,7 @@ const NoteView = () => {
                 />
 
             </Grid>
-        <ImageGallery/>
+        <ImageGallery images={note.imageUrls}/>
         </Grid>
     );
 };

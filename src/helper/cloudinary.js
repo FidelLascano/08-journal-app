@@ -1,7 +1,7 @@
-const CLOUD_NAME = "fhalcom-claudinary";
+    const CLOUD_NAME = "fhalcom-claudinary";
 const RESOURCES_TYPE = "image";
-const UPLOAD_PRESET = "YOUR_UNSIGNED_UPLOAD_PRESET";
-const CLOUDINARY_URL = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/${RESOURCES_TYPE}/upload`;
+const UPLOAD_PRESET = "react-journal";
+const CLOUDINARY_URL = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`;
 
 export const uploadImage = async (file) => {
     const formData = new FormData();
@@ -12,11 +12,13 @@ export const uploadImage = async (file) => {
             method: "POST",
             body: formData
         });
-        return await response.json();
-    } catch (e) {
-        console.log(e);
-    }
+        const json = await response.json();
+        return json;
+    } catch (e) {console.log(e);}
     return null;
 }
 
-export const uploadImages = async (files) => {return await Promise.all(files.map(async (file) => {return await uploadImage(file);}));}
+export const uploadImages = async (files) => {
+    const fileList = await Promise.all(files.map(async (file) => {return await uploadImage(file);}));
+    return fileList.filter(file => file != null);
+}

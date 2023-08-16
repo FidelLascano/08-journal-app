@@ -5,6 +5,7 @@ import {
     startFirebaseLogout,
     startSignUpWithEmailAndPassword
 } from "../../../firebase/providers.js";
+import {resetJournalState} from "../journal/index.js";
 
 export const checkAuth = (email, password) => {
     return async (dispatch) => {
@@ -79,10 +80,14 @@ export const startLoginWithEmailAndPassword =  (email, password) => {
 
 
 export const startLogout = () => {
-    return async (dispatch) => {
+    return async (dispatch, getState) => {
         dispatch(checkinCredentials());
         const logoutResponse= await startFirebaseLogout();
-        if (!logoutResponse.ok) return dispatch(logout({errorMessage: logoutResponse.errorMessage}));
+        if (!logoutResponse.ok)
+        {
+            return dispatch(logout({errorMessage: logoutResponse.errorMessage}));
+        }
         dispatch(logout({errorMessage: null}));
+        dispatch(resetJournalState());
     }
 }

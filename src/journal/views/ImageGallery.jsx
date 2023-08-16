@@ -1,15 +1,15 @@
 import * as React from 'react';
 import {ImageList, ImageListItem} from "@mui/material";
 
-const ImageGallery = () => {
+const ImageGallery = ({images}) => {
     return (
         <ImageList sx={{width: '100%', height: 325}} cols={4} rowHeight={150}>
-            {itemData.map((item) => (
-                <ImageListItem key={item.img}>
+            {images.map(({secure_url, asset_id,etag}) => (
+                <ImageListItem key={asset_id}>
                     <img
-                        src={`${item.img}?w=164&h=164&fit=crop&auto=format`}
-                        srcSet={`${item.img}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                        alt={item.title}
+                        src={`${secure_url}?w=164&h=164&fit=crop&auto=format`}
+                        srcSet={`${secure_url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+                        alt={etag}
                         loading="lazy"
                     />
                 </ImageListItem>
