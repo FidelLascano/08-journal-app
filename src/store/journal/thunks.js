@@ -1,6 +1,6 @@
 
-import {addEmptyNote, savingNewNote, setActiveNote, setNotes, updateNote as updateNoteS} from "./journalSlice.js";
-import {getAllNotes, saveNote, updateNote} from "../../helper/notes.js";
+import {addEmptyNote, savingNewNote, setActiveNote, setNotes, updateNote as updateNoteS, deleteNote as deleteNoteS} from "./journalSlice.js";
+import {deleteNote, getAllNotes, saveNote, updateNote} from "../../helper/notes.js";
 import {uploadImages} from "../../helper/cloudinary.js";
 export const saveNoteT = (note) => {
     return async (dispatch, getState) => {
@@ -43,5 +43,17 @@ export const updateNoteFilesT = (files) =>
         if(filesSaved.length === 0) return;
         note.imageUrls = [...note.imageUrls, ...filesSaved];
         dispatch(updateNoteT(note));
+    }
+}
+
+
+export const deleteNoteT = (note) =>
+{
+    return async (dispatch, getState) =>
+    {
+        dispatch(savingNewNote());
+        const userAuth = getState().auth;
+        const noteResponse = await deleteNote(note, userAuth.uuid);
+        dispatch(deleteNoteS(noteResponse));
     }
 }

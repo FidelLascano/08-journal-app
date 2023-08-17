@@ -1,11 +1,11 @@
 import React, {useEffect, useMemo, useRef} from 'react';
 import Swal from 'sweetalert2';
 import {Button, Grid, TextField, Typography} from "@mui/material";
-import {SaveOutlined, UploadOutlined} from "@mui/icons-material";
+import {DeleteOutlined, SaveOutlined, UploadOutlined} from "@mui/icons-material";
 import ImageGallery from "./ImageGallery.jsx";
 import {useDispatch, useSelector} from "react-redux";
 import {useForm} from "../../hooks/index.js";
-import {updateNoteFilesT, updateNoteT} from "../../store/journal/index.js";
+import {deleteNoteT, updateNoteFilesT, updateNoteT} from "../../store/journal/index.js";
 import {uploadImages} from "../../helper/cloudinary.js";
 
 const NoteView = () => {
@@ -47,6 +47,28 @@ const NoteView = () => {
 
     function handlerFileClick() { fileInputRef.current.click();}
 
+    function handlerDelete() {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                dispatch(deleteNoteT(note));
+                Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                )
+            }
+        })
+    }
+
     return (
         <Grid container
               direction={'row'}
@@ -67,6 +89,10 @@ const NoteView = () => {
                 <Button color={"primary"} sx={{padding:2}} onClick={handlerUpdate} disabled={isSaving}>
                     <SaveOutlined sx={{fontSize: 25, mr: 1}}/>
                     Save
+                </Button>
+                <Button color={"primary"} sx={{padding:2}} onClick={handlerDelete} disabled={isSaving}>
+                    <DeleteOutlined sx={{fontSize: 25, mr: 1}}/>
+                    Delete
                 </Button>
             </Grid>
             <Grid container>
