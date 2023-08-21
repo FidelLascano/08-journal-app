@@ -28,7 +28,7 @@ export const authSlice = createSlice({
            state.displayName = null;
            state.photoURL = null;
            state.accessToken = null;
-           state.errorMessage = action.payload.errorMessage;
+           state.errorMessage = action.payload?.errorMessage || null;
     },
         checkinCredentials: (state, action) =>
         {

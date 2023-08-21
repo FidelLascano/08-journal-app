@@ -1,14 +1,24 @@
 import { initializeApp } from "firebase/app";
 import {getAuth} from "firebase/auth";
 import {getFirestore} from "firebase/firestore";
+import {globalEnvironment} from "../src/helper/globalEnvironment.js";
+//prod
+const {
+    VITE_APIKEY,
+    VITE_AUTHDOMAIN,
+    VITE_PROJECTID,
+    VITE_STORAGEBUCKET,
+    VITE_MESSAGINGSENDERID,
+    VITE_APPID
+} = globalEnvironment();
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDkVhWnhc2XA5WcGto2pWc3DD1tQp_T_TQ",
-    authDomain: "react-courses-37f1d.firebaseapp.com",
-    projectId: "react-courses-37f1d",
-    storageBucket: "react-courses-37f1d.appspot.com",
-    messagingSenderId: "24983484093",
-    appId: "1:24983484093:web:6a6c86f60926791452e9d4"
+    apiKey: VITE_APIKEY,
+    authDomain: VITE_AUTHDOMAIN,
+    projectId: VITE_PROJECTID,
+    storageBucket: VITE_STORAGEBUCKET,
+    messagingSenderId: VITE_MESSAGINGSENDERID,
+    appId: VITE_APPID
 };
 
 // Initialize Firebase

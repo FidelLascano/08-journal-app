@@ -6,14 +6,10 @@ import {AddOutlined} from "@mui/icons-material";
 import {saveNoteT} from "../../store/journal/index.js";
 import {useDispatch, useSelector} from "react-redux";
 import NothingSelectedView from "../views/NothingSelectedView.jsx";
+import {initialNote} from "../../helper/notes.js";
 
 /*<NothingSelectedView/>*/
-const initialNote = {
-    title: '',
-    body: '',
-    date: new Date().getTime(),
-    imageUrls: [],
-};
+
 export const JournalPage = () => {
     const {isSaving, active} = useSelector(state => state.journal);
     const dispatch = useDispatch();

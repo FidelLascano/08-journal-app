@@ -7,7 +7,8 @@ export const uploadImage = async (file) => {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("upload_preset", UPLOAD_PRESET);
-    try {
+    try
+    {
         const response = await fetch(CLOUDINARY_URL, {
             method: "POST",
             body: formData

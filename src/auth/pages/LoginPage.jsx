@@ -61,7 +61,7 @@ export const LoginPage = () => {
 
     return (
         <AuthLayout title={"Login"}>
-            <form onSubmit={handlerSubmit} className={'animate__animated animate__fadeIn animate__faster'}>
+            <form onSubmit={handlerSubmit} className={'animate__animated animate__fadeIn animate__faster'} aria-label={"submitLoginForm"}>
                 {(formStarted) && <h2 style={{color:`${formValid?'green':'red'}`}}>{formValid?'Valid Form':'Invalid Form'}</h2>}
                 <Grid container spacing={1}>
                     <Grid item xs={12} md={12} container spacing={1} mt={1}>
@@ -107,6 +107,7 @@ export const LoginPage = () => {
                                 fullWidth
                                 type={"submit"}
                                 disabled={formSubmitted}
+                                aria-label={'btnLoginLabel'}
                             >Login</Button>
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -114,6 +115,7 @@ export const LoginPage = () => {
                                 variant={'contained'}
                                 fullWidth onClick={handlerGoogleSingIn}
                                 disabled={formSubmitted}
+                                aria-label={'btnGoogleLabel'}
                             >
                                 <Google/>
                                 <Typography sx={{ml: 1}}>Google</Typography>

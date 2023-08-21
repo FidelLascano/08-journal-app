@@ -1,6 +1,13 @@
 import {collection, doc, getDocs, setDoc, deleteDoc} from "firebase/firestore";
 import {firebaseDb} from "../../firebase/index.js";
 
+export const initialNote = {
+    title: '',
+    body: '',
+    date: new Date().getTime(),
+    imageUrls: [],
+};
+
 export const getAllNotes = async (uuid) => {
     const responseNotes = [];
     if (!uuid) return responseNotes;
